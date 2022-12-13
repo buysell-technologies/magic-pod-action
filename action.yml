@@ -3,19 +3,13 @@ description: "Run MagicPod test"
 
 # TODO: inputs, outputsを修正
 inputs:
-  API_TOKEN:
-    description: "API Token"
+  ARG:
+    description: "sample input"
     required: true
-  ORGANIZATION:
-    description: "Organization name"
-    required: true
-  PROJECT:
-    description: "Project name"
-    required: true
-  TEST_SETTINGS_NUMBER:
-    description: "Test settings number defined in the project batch run page"
-    required: true
-    default: "0"
+
+outputs:
+  RES:
+    description: "sample output"
 
 runs:
   using: "node16"
