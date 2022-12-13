@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "git@github.com:buysell-technologies/magic-pod-action.git",
   "author": "t-jimbo <jbear.um@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.0"
+  }
 }
