@@ -6,7 +6,7 @@
   "author": "t-jimbo <jbear.um@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --outDir dist"
+    "build": "ncc build src/index.ts -m"
   },
   "dependencies": {
     "@actions/core": "^1.10.0"
