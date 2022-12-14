@@ -1,4 +1,9 @@
-export type Status = "running" | "succeeded" | "failed" | "aborted" | "unresolved";
+export type Status =
+  | "running"
+  | "succeeded"
+  | "failed"
+  | "aborted"
+  | "unresolved";
 
 type DataPattern = {
   data_index: number;
@@ -16,7 +21,6 @@ type Result = {
   data_patterns: DataPattern[] | null;
 };
 
-
 type Detail = {
   pattern_name: string | null;
   included_labels: string[];
@@ -25,10 +29,11 @@ type Detail = {
 };
 
 export type TestCases = {
-  succeeded: number;
-  failed: number;
-  aborted: number;
-  unresolved: number;
+  running?: number;
+  succeeded?: number;
+  failed?: number;
+  aborted?: number;
+  unresolved?: number;
   total: number;
   details: Detail[];
 };
