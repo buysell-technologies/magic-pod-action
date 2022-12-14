@@ -1,4 +1,4 @@
-import axios, { type AxiosError } from "axios/index";
+import axios, { type AxiosError } from "axios";
 import type { BatchRun } from "../@types/batchRun";
 import { BASE_URL, type BaseParams } from "./base";
 
@@ -34,8 +34,8 @@ export const postCrossBatchRun: (
     .post<BatchRun>(`/${organization}/${project}/cross-batch-run/`, payload)
     .then((res) => res.data)
     .catch((error: AxiosError<{ detail: string }>) => {
-      console.log(error.code);
-      console.log(error.response?.data.detail);
+      console.error(error.code);
+      console.error(error.response?.data.detail);
       return null;
     });
 };
