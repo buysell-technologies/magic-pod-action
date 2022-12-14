@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { type AxiosError } from "axios";
 import type { BatchRun } from "../@types/batchRun";
 import { BASE_URL, BaseParams } from "./base";
 
