@@ -1,4 +1,4 @@
-import axios from "axios/index";
+import axios, { AxiosError } from "axios/index";
 import type { BatchRun } from "../@types/batchRun";
 import { BASE_URL, type BaseParams } from "./base";
 
@@ -15,13 +15,12 @@ export type Params = {
  */
 export const postCrossBatchRun: (
   params: Params
-) => Promise<{ data: BatchRun; error: Error | null }> = async ({
+) => Promise<BatchRun | null> = async ({
   apiToken,
   organization,
   project,
   testSettingNumber,
 }) => {
-  // TODO: errorハンドル
   const instance = axios.create({
     baseURL: BASE_URL,
     headers: { Authorization: `Token ${apiToken}` },
@@ -31,12 +30,12 @@ export const postCrossBatchRun: (
     test_settings_number: testSettingNumber,
   };
 
-  const res = await instance.post(
-    `/${organization}/${project}/cross-batch-run/`,
-    payload
-  );
-
-  const data: BatchRun = res.data;
-
-  return { data, error: null };
+  return await instance
+    .post<BatchRun>(`/${organization}/${project}/cross-batch-run/`, payload)
+    .then((res) => res.data)
+    .catch((error: AxiosError<{ detail: string }>) => {
+      console.log(error.code);
+      console.log(error.response?.data.detail);
+      return null;
+    });
 };

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { BatchRun } from "../@types/batchRun";
 import { BASE_URL, BaseParams } from "./base";
 
@@ -15,23 +15,23 @@ type Params = {
  */
 export const getBatchRun: (
   params: Params
-) => Promise<{ data: BatchRun; error: Error | null }> = async ({
+) => Promise<BatchRun | null> = async ({
   organization,
   project,
   apiToken,
   batchRunNumber,
 }) => {
-  // TODO: errorハンドル
   const instance = axios.create({
     baseURL: BASE_URL,
     headers: { Authorization: `Token ${apiToken}` },
   });
 
-  const res = await instance.get(
-    `/${organization}/${project}/batch-run/${batchRunNumber}/`
-  );
-
-  const data: BatchRun = res.data;
-
-  return { data, error: null };
+  return await instance
+    .get<BatchRun>(`/${organization}/${project}/batch-run/${batchRunNumber}/`)
+    .then((res) => res.data)
+    .catch((error: AxiosError<{ detail: string }>) => {
+      console.log(error.code);
+      console.log(error.response?.data.detail);
+      return null;
+    });
 };
