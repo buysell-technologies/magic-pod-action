@@ -30,8 +30,8 @@ export const getBatchRun: (
     .get<BatchRun>(`/${organization}/${project}/batch-run/${batchRunNumber}/`)
     .then((res) => res.data)
     .catch((error: AxiosError<{ detail: string }>) => {
-      console.log(error.code);
-      console.log(error.response?.data.detail);
+      console.error(error.code);
+      console.error(error.response?.data.detail);
       return null;
     });
 };
