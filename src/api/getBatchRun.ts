@@ -31,7 +31,9 @@ export const getBatchRun: (
     .then((res) => res.data)
     .catch((error: AxiosError<{ detail: string }>) => {
       console.error(error.code);
-      console.error(error.response?.data.detail);
+      if (error.response) {
+        console.error(error.response.data.detail);
+      }
       return null;
     });
 };
