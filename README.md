@@ -26,11 +26,11 @@ Estimated test run time. completion of the test is not detected until this time.
 
 ### `RETRY_INTERVAL`
 
-Limit value of seconds to wait for completion. default is equal to estimatedTime + 120 sec.
+Retry interval after exceeding estimated time. default is 10 sec.
 
 ### `WAIT_LIMIT`
 
-Retry interval after exceeding estimated time. default is 10 sec.
+Limit value of seconds to wait for completion. default is equal to estimatedTime + 120 sec.
 
 
 ## Example usage
