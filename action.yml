@@ -1,15 +1,31 @@
 name: "MagicPodAction"
 description: "Run MagicPod test"
 
-# TODO: inputs, outputsを修正
 inputs:
-  ARG:
-    description: "sample input"
+  API_TOKEN:
+    description: "MagicPod API Token"
     required: true
 
-outputs:
-  RES:
-    description: "sample output"
+  ORGANIZATION:
+    description: "Organization name"
+    required: true
+
+  PROJECT:
+    description: "Project name"
+    required: true
+
+  TEST_SETTING_NUMBER:
+    description: "Test settings number defined in the project batch run page"
+    required: true
+
+  ESTIMATED_TIME:
+    description: "Estimated test run time. completion of the test is not detected until this time. default is 300 sec"
+
+  WAIT_LIMIT:
+    description: "Limit value of seconds to wait for completion. default is equal to estimatedTime + 120 sec"
+
+  RETRY_INTERVAL:
+    description: "Retry interval after exceeding estimated time. default is 10 sec"
 
 runs:
   using: "node16"
