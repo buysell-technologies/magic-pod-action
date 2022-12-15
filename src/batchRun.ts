@@ -26,6 +26,10 @@ export const executeBatchRun: (params: Params) => Promise<boolean> = async ({
   waitLimit = estimatedTime + 120,
   retryInterval = 10,
 }) => {
+  if (testSettingNumber === 0) {
+    console.error("invalid test setting number");
+    return true;
+  }
   console.log("starting test...");
   const batchRun = await postCrossBatchRun({
     apiToken,
