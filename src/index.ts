@@ -11,7 +11,7 @@ const main = async () => {
   const waitLimit = Number(core.getInput("WAIT_LIMIT")) || undefined;
   const retryInterval = Number(core.getInput("RETRY_INTERVAL")) || undefined;
 
-  const isFailed = await executeBatchRun({
+  const res = await executeBatchRun({
     apiToken,
     organization,
     project,
@@ -21,7 +21,8 @@ const main = async () => {
     retryInterval,
   });
 
-  if (isFailed) {
+  if (!res.success) {
+    console.error(res.error.message);
     core.setFailed("test failed");
   }
 };
