@@ -14,10 +14,19 @@ export type Params = {
   retryInterval?: number;
 } & CrossBatchRunParams;
 
+type Result =
+  | {
+      success: true;
+    }
+  | {
+      success: false;
+      error: Error;
+    };
+
 /**
  * ExecuteBatchRun starts batch run and wait for its completion with showing progress
  */
-export const executeBatchRun: (params: Params) => Promise<boolean> = async ({
+export const executeBatchRun: (params: Params) => Promise<Result> = async ({
   apiToken,
   organization,
   project,
@@ -27,25 +36,26 @@ export const executeBatchRun: (params: Params) => Promise<boolean> = async ({
   retryInterval = 10,
 }) => {
   if (testSettingNumber === 0) {
-    console.error("invalid test setting number");
-    return true;
+    return { success: false, error: new Error("invalid test setting number") };
   }
   console.log("starting test...");
+
   const batchRun = await postCrossBatchRun({
     apiToken,
     organization,
     project,
     testSettingNumber,
   });
-
   if (!batchRun) {
-    console.log("failed to start cross-batch-run");
-    return true;
+    return {
+      success: false,
+      error: new Error("failed to start cross-batch-run"),
+    };
   }
 
   console.log("started successfully");
-  console.log("test_name: ", batchRun.test_setting_name);
-  console.log("detail: ", batchRun.url);
+  console.log("test_name:", batchRun.test_setting_name);
+  console.log("detail:", batchRun.url);
 
   console.log(batchRun.test_cases.total, "tests is running...");
 
@@ -64,20 +74,22 @@ export const executeBatchRun: (params: Params) => Promise<boolean> = async ({
     });
 
     if (!batchRunUnderProgress) {
-      console.error("error");
-      return true;
+      return { success: false, error: new Error("error") };
     }
 
     if (batchRunUnderProgress.status === "succeeded") {
       console.log("successfully finished!");
       console.log(batchRunUnderProgress.finished_at);
-      return false;
+      return { success: true };
     }
 
     if (batchRunUnderProgress.status !== "running") {
-      console.log("finished: ", batchRunUnderProgress.status);
-      console.log(batchRunUnderProgress.finished_at);
-      return true;
+      return {
+        success: false,
+        error: new Error(
+          `finished with status: ${batchRunUnderProgress.status}\nfinished at: ${batchRunUnderProgress.finished_at}`
+        ),
+      };
     }
 
     console.log("running...");
@@ -88,8 +100,7 @@ export const executeBatchRun: (params: Params) => Promise<boolean> = async ({
     await setTimeout(retryInterval * 1000);
 
     if (passedMs > waitLimit * 1000) {
-      console.error("wait limit has come");
-      return true;
+      return { success: false, error: new Error("wait limit has come") };
     }
   }
 };
