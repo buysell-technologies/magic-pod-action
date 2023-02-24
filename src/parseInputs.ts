@@ -28,16 +28,17 @@ type Key =
   | "WAIT_LIMIT"
   | "RETRY_INTERVAL";
 
-const getNumberInput = <T extends boolean>(
+export const getNumberInput = <T extends boolean>(
   key: Key,
   required?: T
 ): T extends true ? number : number | undefined => {
   const value = core.getInput(key);
   if (value === "") {
-    if (required) throw new Error("input is empty");
+    if (required) throw new Error(`input ${key} is empty`);
     return <T extends true ? number : number | undefined>undefined;
   }
-  if (Number.isNaN(Number(value))) throw new Error("input isNaN");
+  if (Number.isNaN(Number(value)))
+    throw new Error(`input ${key} is not a number`);
 
   return parseInt(value);
 };

@@ -8,7 +8,8 @@
   "scripts": {
     "env": "export $(cat .env| grep -v \"#\" | xargs)",
     "build": "ncc build src/index.ts -m",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "vitest --run"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
@@ -22,6 +23,7 @@
     "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.8.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vitest": "^0.28.5"
   }
 }
