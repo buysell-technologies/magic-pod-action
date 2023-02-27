@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "env": "export $(cat .env| grep -v \"#\" | xargs)",
-    "build": "ncc build src/index.ts -m",
+    "build": "ncc build src/index.ts -m --license license.txt",
     "start": "node dist/index.js",
     "test": "vitest --run"
   },
