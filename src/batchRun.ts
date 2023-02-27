@@ -25,6 +25,9 @@ type Result =
 
 /**
  * ExecuteBatchRun starts batch run and wait for its completion with showing progress
+ *
+ * This function is from Magic-Pod/magicpod-api-client (common/common.go executeBatchRun())
+ * @see https://github.com/Magic-Pod/magicpod-api-client
  */
 export const executeBatchRun: (params: Params) => Promise<Result> = async ({
   apiToken,
