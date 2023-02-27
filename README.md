@@ -1,6 +1,8 @@
 # magic-pod-action
 
-Run batch test
+GitHub Actions for [MagicPod](https://magicpod.com/)
+
+Starts batch run and wait for its completion.
 
 ## Inputs
 
