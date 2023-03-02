@@ -40,22 +40,29 @@ Limit value of seconds to wait for completion. default is equal to estimatedTime
 
 ## Example usage
 
-```
-    steps:
-      - name: checkout with private repository
-        uses: actions/checkout@v3
-        with:
-          repository: buysell-technologies/magic-pod-action
-          path: ./.github/actions/magic-pod
-          ref: main
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # need PAT with repo authority
+```yml
+name: Release
 
-      - name: execute magic-pod-action
-        uses: ./.github/actions/magic-pod
-        with:
-          API_TOKEN: ${{ secrets.MAGIC_POD_API_TOKEN }}
-          ORGANIZATION: "Organization name"
-          PROJECT: "Project name"
-          TEST_SETTINGS_NUMBER: "1"
-          WAIT_LIMIT: "120"
+on:
+  push:
+    branches:
+      - your release branch
+
+jobs:
+  magic-pod-test:
+    needs: deploy-stg
+    uses: buysell-technologies/magic-pod-action@v0.1
+    with:
+      API_TOKEN: ${{ secrets.MAGIC_POD_API_TOKEN }}
+      ORGANIZATION: your-organization
+      PROJECT: your-project
+      TEST_SETTING_NUMBER: "123"
+      ESTIMATED_TIME: "300"
+      RETRY_INTERVAL: "10"
+      WAIT_LIMIT: "600"
+
+  deploy:
+    needs: magic-pod-test
+    uses: ./.github/workflows/your-deploy-workflow.yml
+    secrets: inherit
 ```
