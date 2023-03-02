@@ -1,6 +1,6 @@
 {
   "name": "magic-pod-action",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "repository": "git@github.com:buysell-technologies/magic-pod-action.git",
   "author": "t-jimbo <jbear.um@gmail.com>",
