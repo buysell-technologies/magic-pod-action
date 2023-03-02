@@ -1,5 +1,8 @@
 # magic-pod-action
 
+![](https://img.shields.io/github/package-json/v/buysell-technologies/magic-pod-action)
+![](https://img.shields.io/github/license/buysell-technologies/magic-pod-action)
+
 GitHub Actions for [MagicPod](https://magicpod.com/)
 
 Starts batch run and wait for its completion.
