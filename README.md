@@ -1,11 +1,15 @@
-# magic-pod-action
+# MagicPod Action
+
+GitHub Actions for [MagicPod](https://magicpod.com/)
 
 ![](https://img.shields.io/github/package-json/v/buysell-technologies/magic-pod-action)
 ![](https://img.shields.io/github/license/buysell-technologies/magic-pod-action)
 
-GitHub Actions for [MagicPod](https://magicpod.com/)
+## What it does
 
 Starts batch run and wait for its completion.
+
+See: https://tech.buysell-technologies.com/entry/2023/03/13/000000
 
 ## Inputs
 
