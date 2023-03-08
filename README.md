@@ -9,7 +9,7 @@ GitHub Actions for [MagicPod](https://magicpod.com/)
 
 Starts batch run and wait for its completion.
 
-See: https://tech.buysell-technologies.com/entry/2023/03/13/000000
+See: https://tech.buysell-technologies.com/entry/magicpod-action
 
 ## Inputs
 
