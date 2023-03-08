@@ -3,10 +3,8 @@
   "version": "0.1.1",
   "main": "index.js",
   "repository": "git@github.com:buysell-technologies/magic-pod-action.git",
-  "author": "t-jimbo <jbear.um@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "env": "export $(cat .env| grep -v \"#\" | xargs)",
     "build": "ncc build src/index.ts -m --license license.txt",
     "start": "node dist/index.js",
     "test": "vitest --run"
