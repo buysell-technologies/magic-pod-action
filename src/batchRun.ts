@@ -43,13 +43,18 @@ export const executeBatchRun: (params: Params) => Promise<Result> = async ({
   }
   console.log("starting test...");
 
-  const batchRun = await postCrossBatchRun({
+  const { data: batchRun, error } = await postCrossBatchRun({
     apiToken,
     organization,
     project,
     testSettingNumber,
   });
-  if (!batchRun) {
+  if (error) {
+    console.error(error.code);
+    console.error(error.message);
+    if (error.response) {
+      console.error(error.response.data.detail);
+    }
     return {
       success: false,
       error: new Error("failed to start cross-batch-run"),
