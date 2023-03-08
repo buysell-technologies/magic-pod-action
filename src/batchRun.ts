@@ -43,13 +43,18 @@ export const executeBatchRun: (params: Params) => Promise<Result> = async ({
   }
   console.log("starting test...");
 
-  const batchRun = await postCrossBatchRun({
+  const { data: batchRun, error } = await postCrossBatchRun({
     apiToken,
     organization,
     project,
     testSettingNumber,
   });
-  if (!batchRun) {
+  if (error) {
+    console.error(error.code);
+    console.error(error.message);
+    if (error.response) {
+      console.error(error.response.data.detail);
+    }
     return {
       success: false,
       error: new Error("failed to start cross-batch-run"),
@@ -69,15 +74,23 @@ export const executeBatchRun: (params: Params) => Promise<Result> = async ({
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    const batchRunUnderProgress = await getBatchRun({
+    const { data: batchRunUnderProgress, error } = await getBatchRun({
       organization,
       project,
       apiToken,
       batchRunNumber: batchRun.batch_run_number,
     });
 
-    if (!batchRunUnderProgress) {
-      return { success: false, error: new Error("error") };
+    if (error) {
+      console.error(error.code);
+      console.error(error.message);
+      if (error.response) {
+        console.error(error.response.data.detail);
+      }
+      return {
+        success: false,
+        error: new Error("could not get batch run status"),
+      };
     }
 
     if (batchRunUnderProgress.status === "succeeded") {

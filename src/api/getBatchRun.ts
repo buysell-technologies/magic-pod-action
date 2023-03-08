@@ -2,20 +2,22 @@ import axios, { type AxiosError } from "axios";
 import type { BatchRun } from "../@types/batchRun";
 import { BASE_URL, BaseParams } from "./base";
 
+type BatchRunError = AxiosError<{ detail: string }>;
+
 type Params = {
   batchRunNumber: number;
 } & BaseParams;
 
+type GetBatchRun = (
+  params: Params
+) => Promise<
+  { data: BatchRun; error: null } | { data: null; error: BatchRunError }
+>;
+
 /**
  * retrieves status and number of test cases executed of a specified batch run
- * @param apiToken
- * @param organization
- * @param project
- * @param batchRunNumber
  */
-export const getBatchRun: (
-  params: Params
-) => Promise<BatchRun | null> = async ({
+export const getBatchRun: GetBatchRun = async ({
   organization,
   project,
   apiToken,
@@ -26,14 +28,8 @@ export const getBatchRun: (
     headers: { Authorization: `Token ${apiToken}` },
   });
 
-  return await instance
+  return instance
     .get<BatchRun>(`/${organization}/${project}/batch-run/${batchRunNumber}/`)
-    .then((res) => res.data)
-    .catch((error: AxiosError<{ detail: string }>) => {
-      console.error(error.code);
-      if (error.response) {
-        console.error(error.response.data.detail);
-      }
-      return null;
-    });
+    .then((res) => ({ data: res.data, error: null }))
+    .catch((error: BatchRunError) => ({ data: null, error }));
 };
