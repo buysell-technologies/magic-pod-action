@@ -22,7 +22,7 @@ export const getBatchRun: GetBatchRun = async ({
   project,
   apiToken,
   batchRunNumber,
-}: Params) => {
+}) => {
   const instance = axios.create({
     baseURL: BASE_URL,
     headers: { Authorization: `Token ${apiToken}` },
