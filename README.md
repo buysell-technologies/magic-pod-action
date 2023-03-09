@@ -2,8 +2,8 @@
 
 GitHub Actions for [MagicPod](https://magicpod.com/)
 
-![](https://img.shields.io/github/package-json/v/buysell-technologies/magic-pod-action)
-![](https://img.shields.io/github/license/buysell-technologies/magic-pod-action)
+[![version](https://img.shields.io/github/package-json/v/buysell-technologies/magic-pod-action)](https://github.com/buysell-technologies/magic-pod-action/releases)
+[![license](https://img.shields.io/github/license/buysell-technologies/magic-pod-action)](LICENSE)
 
 ## What it does
 
