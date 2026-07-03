@@ -31,7 +31,11 @@ jobs:
 
       - name: Check dist is up to date
         run: |
-          if ! git diff --exit-code -- dist; then
+          # Detect both modifications to tracked files and newly generated
+          # untracked files under dist/ (git diff alone misses the latter).
+          if [ -n "$(git status --porcelain -- dist)" ]; then
             echo "::error::dist/ is out of date. Run 'npm run build' and commit the changes."
+            git status --porcelain -- dist
+            git diff -- dist
             exit 1
           fi
