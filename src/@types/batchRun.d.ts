@@ -1,9 +1,5 @@
 export type Status =
-  | "running"
-  | "succeeded"
-  | "failed"
-  | "aborted"
-  | "unresolved";
+  "running" | "succeeded" | "failed" | "aborted" | "unresolved";
 
 type DataPattern = {
   data_index: number;
