@@ -74,14 +74,14 @@ describe("getNumberInput", () => {
     it("fail with NaN", () => {
       process.env.INPUT_TEST_SETTING_NUMBER = "foo";
       expect(() => getNumberInput("TEST_SETTING_NUMBER")).toThrow(
-        "input TEST_SETTING_NUMBER is not a number"
+        "input TEST_SETTING_NUMBER is not a number",
       );
     });
 
     it("fail when input is empty string and required", () => {
       process.env.INPUT_TEST_SETTING_NUMBER = "";
       expect(() => getNumberInput("TEST_SETTING_NUMBER", true)).toThrow(
-        "input TEST_SETTING_NUMBER is empty"
+        "input TEST_SETTING_NUMBER is empty",
       );
     });
   });

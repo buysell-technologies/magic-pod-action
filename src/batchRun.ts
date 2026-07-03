@@ -72,7 +72,6 @@ export const executeBatchRun: (params: Params) => Promise<Result> = async ({
   console.log(`wait until the expected ${estimatedTime} sec passes...`);
   await setTimeout(estimatedTime * 1000);
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const { data: batchRunUnderProgress, error } = await getBatchRun({
       organization,
@@ -103,7 +102,7 @@ export const executeBatchRun: (params: Params) => Promise<Result> = async ({
       return {
         success: false,
         error: new Error(
-          `finished with status: ${batchRunUnderProgress.status}\nfinished at: ${batchRunUnderProgress.finished_at}`
+          `finished with status: ${batchRunUnderProgress.status}\nfinished at: ${batchRunUnderProgress.finished_at}`,
         ),
       };
     }

@@ -23,14 +23,11 @@ export const parseInputs = (): Params => {
 };
 
 type Key =
-  | "TEST_SETTING_NUMBER"
-  | "ESTIMATED_TIME"
-  | "WAIT_LIMIT"
-  | "RETRY_INTERVAL";
+  "TEST_SETTING_NUMBER" | "ESTIMATED_TIME" | "WAIT_LIMIT" | "RETRY_INTERVAL";
 
 export const getNumberInput = <T extends boolean>(
   key: Key,
-  required?: T
+  required?: T,
 ): T extends true ? number : number | undefined => {
   const value = core.getInput(key);
   if (value === "") {

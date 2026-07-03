@@ -9,7 +9,7 @@ export type Params = {
 } & BaseParams;
 
 type PostCrossBatchRun = (
-  params: Params
+  params: Params,
 ) => Promise<
   { data: BatchRun; error: null } | { data: null; error: BatchRunError }
 >;

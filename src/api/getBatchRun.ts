@@ -9,7 +9,7 @@ type Params = {
 } & BaseParams;
 
 type GetBatchRun = (
-  params: Params
+  params: Params,
 ) => Promise<
   { data: BatchRun; error: null } | { data: null; error: BatchRunError }
 >;
