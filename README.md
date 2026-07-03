@@ -55,7 +55,7 @@ on:
 jobs:
   magic-pod-test:
     needs: deploy-stg
-    uses: buysell-technologies/magic-pod-action@v0.1
+    uses: buysell-technologies/magic-pod-action@v0.2
     with:
       API_TOKEN: ${{ secrets.MAGIC_POD_API_TOKEN }}
       ORGANIZATION: your-organization
