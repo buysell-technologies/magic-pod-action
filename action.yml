@@ -28,5 +28,5 @@ inputs:
     description: "Retry interval after exceeding estimated time. default is 10 sec"
 
 runs:
-  using: "node16"
+  using: "node24"
   main: "dist/index.js"
