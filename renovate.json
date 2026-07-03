@@ -1,0 +1,69 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigestsToSemver",
+    ":dependencyDashboard"
+  ],
+  "rangeStrategy": "pin",
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
+  "timezone": "Asia/Tokyo",
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
+  "packageRules": [
+    {
+      "description": [
+        "メジャー更新は破壊的変更のリスクが高いため、安定する(枯れる)まで長めに待ってからPRを作成する。",
+        "minor/patchはグローバルのminimumReleaseAge(7日)のまま。",
+        "セキュリティ更新はvulnerabilityAlertsのデフォルト(minimumReleaseAge:null, prCreation:immediate)で即時PRになるため影響しない。"
+      ],
+      "matchUpdateTypes": ["major"],
+      "minimumReleaseAge": "30 days"
+    },
+    {
+      "description": [
+        "pin更新は既に解決済みの現行バージョンへ範囲を固定するだけで、新規バージョンの取り込みではない。",
+        "そのためpin対象バージョンにはreleaseTimestampが付与されず、グローバルのminimumReleaseAge(7日)+",
+        "minimumReleaseAgeBehaviour:timestamp-required(デフォルト)+internalChecksFilter:strictの下では",
+        "「タイムスタンプ無し=判定不能=pending」として除外され、pin PRが update failure になる。",
+        "pinは安定待機の対象とする意味がないため、minimumReleaseAgeの待機を解除する。",
+        "なおこのリポジトリはGitHub Actionとして依存をnccでdist/にバンドルして配布するアプリケーション型であり、",
+        "npmライブラリとしてpublishしないため、dependenciesも含め全依存をpinしてよい。"
+      ],
+      "matchUpdateTypes": ["pin"],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": [
+        "action.ymlのNodeランタイム(customManagers参照)の更新候補を「偶数メジャーのみ」のタグに制限する。",
+        "GitHub Actionsのrunエンジンが受け付けるのは node16/node20/node24 のようなメジャーのみの識別子で、",
+        "かつ偶数(LTS)メジャーしかサポートされないため。",
+        "dockerデータソースのnodeイメージには 16.20.2 や 21 のようなタグも存在するので、この制限がないと不正値になる。"
+      ],
+      "matchManagers": ["custom.regex"],
+      "matchDatasources": ["docker"],
+      "matchDepNames": ["node"],
+      "allowedVersions": "/^\\d*[02468]$/"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": [
+        "action.ymlのGitHub Actionランタイム(runs.using: node16 等)を追従更新する。",
+        "この値を拾う組み込みmanagerは存在しない。",
+        "node-versionデータソースはフルバージョン(例: 20.11.1)を返すため、グローバルのrangeStrategy:pinと組み合わさると",
+        "node20.11.1のような不正値に書き換えられてしまう。",
+        "そのため、素のメジャーのみのタグ(16/20/24等)を持つDocker Hub公式nodeイメージをdockerデータソースとして参照し、",
+        "packageRulesのallowedVersionsで偶数メジャーのみに制限している。",
+        "注意: ランタイム更新時はdist/の再ビルド(yarn build)と@types/node等の整合も必要なため、PRをそのままマージせず確認すること。",
+        "また、GitHubランナーが新しいnodeメジャーに対応するまでラグがある場合は、対応を待ってからマージすること。"
+      ],
+      "managerFilePatterns": ["/^action\\.ya?ml$/"],
+      "matchStrings": ["using:\\s*[\"']?node(?<currentValue>\\d+)[\"']?"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "docker"
+    }
+  ]
+}
