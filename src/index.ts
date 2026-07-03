@@ -12,9 +12,7 @@ const main = async () => {
   }
 };
 
-try {
-  main();
-} catch (e) {
+main().catch((e) => {
   if (typeof e === "string" || e instanceof Error) core.setFailed(e);
-  core.setFailed("unexpected error has occurred");
-}
+  else core.setFailed("unexpected error has occurred");
+});
